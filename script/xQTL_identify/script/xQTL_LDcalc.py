@@ -7,7 +7,7 @@ from __future__ import division
 import sys, copy
 import numpy as np
 import pandas as pd
-
+from operator import itemgetter, attrgetter
 ## fl_hmp is the significant snp hmp file
 ## fl_xQTL is the xQTL_summary file which is the output file of xQTL_group.py
 ## fl_out_path, outpath , is better same as the path xQTL_group.py

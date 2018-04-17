@@ -19,7 +19,7 @@ def gff_dictbuild(FH):
         line = line.split('\t')
         key = (line[8].split(";"))[0].split("=")[1] # get gene name
         value.append(key)
-        value.append((int(line[0][3])))
+		value.append((int(line[0][3:])))
         #print line[0][3]
         #print type(int(line[0][3]))
         value.append(int(line[3]))
