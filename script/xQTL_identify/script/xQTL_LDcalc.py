@@ -71,24 +71,24 @@ result = []
 
 for line1 in xQTL:
 	line1 = line1.split('\t')
-	trait1, lead_snp1, xQTL1 = line1[0], line1[7], line1[1]
+	trait1, condition, lead_snp1, xQTL1 = line1[0], line1[1], line1[8], line1[2]
 	for line2 in xQTL_copy:
 		line2 = line2.split('\t')
-		trait2, lead_snp2, xQTL2 = line2[0], line2[7], line2[1]
+		trait2, condition, lead_snp2, xQTL2 = line2[0], line2[1], line2[8], line2[2]
 		if trait1 == trait2:
 			if lead_snp2 != lead_snp1:
 				hapmap1 = dicHMP[lead_snp1][1]
 				hapmap2 = dicHMP[lead_snp2][1]
 				R2 = my_LDcalculate(hapmap1, hapmap2)
 				## more test file, imporve the output
-				output = [trait1, xQTL1, xQTL2, lead_snp1, lead_snp2, R2]
+				output = [trait1, condition, xQTL1, xQTL2, lead_snp1, lead_snp2, R2]
 				result.append(output)
 		
 	xQTL_copy.pop(0)
 
 fl_out = fl_out_path + '_xQTL_ld.txt'
 with open(fl_out, 'a') as fh_out:
-	title = ['trait', 'xQTL1', 'xQTL2', 'lead_snp1', 'lead_snp2', 'R2']
+	title = ['trait', 'condition', 'xQTL1', 'xQTL2', 'lead_snp1', 'lead_snp2', 'R2']
 	fh_out.writelines('\t'.join(title))
 	fh_out.writelines('\n')
 	for line in result:

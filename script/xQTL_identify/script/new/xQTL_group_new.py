@@ -166,7 +166,7 @@ with open(fl_xQTL, 'a') as fh_xQTL:
 		fh_xQTL.writelines('\n')
 
 with open(fl_summary, 'a') as fh_summary:
-	title = ['trait', 'condition', 'xQTL', 'chr', 'start', 'end', 'length', 'snp_number', 'leadsnp', 'leadp', 'gene_list', 'allsnp']
+	title = ['trait', 'condition', 'chr', 'start', 'end', 'lenght', 'snp_number', 'leadsnp', 'leadp', 'gene_list', 'allsnp']
 	fh_summary.writelines('\t'.join(title))
 	fh_summary.writelines('\n')
 	for key1 in sorted(summary_drought.keys()):
