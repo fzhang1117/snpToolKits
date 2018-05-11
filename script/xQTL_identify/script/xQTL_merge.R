@@ -88,8 +88,6 @@ for(trait in trait_group){
     }
     remove.drought <- remove.drought[!duplicated(remove.drought), ]
     remove.normal <- remove.normal[!duplicated(remove.normal), ]
-#     xQTL_drought_rest <- rbind(xQTL_drought_rest, xQTL_drought[!(xQTL_drought$trait %in% trait & (xQTL_drought$xQTL %in% remove.drought)), ])
-#     xQTL_normal_rest <- rbind(xQTL_normal_rest, xQTL_normal[!(xQTL_normal$trait %in% trait & xQTL_normal$xQTL %in% remove.normal), ])
 }
 
 ## metabolite filter ##

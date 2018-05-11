@@ -32,10 +32,10 @@ with open(fl_anno, 'r') as fh_anno:
 
 with open(fl_out, 'a') as fh_out:
 	with open(fl_xQTL_final, 'r') as fh_xQTL_final:
+#		allgenes_flanking = []
 		for line in islice(fh_xQTL_final, 1, None):
 			line = line.strip('\n').split('\t')
-			trait, condition, xQTL, xQTL_chr, lead_snp, xQTL_start, xQTL_end, leadp = line[0], line[1], line[2], line[3], line[8], int(line[4]), int(line[5]), line[9]
-			location = int(re.split('_', lead_snp)[1])
+			trait, condition, xQTL, xQTL_chr, lead_snp, xQTL_start, xQTL_end, leadp, location = line[0], line[1], line[2], line[3], line[8], int(line[4]), int(line[5]), line[9], int(line[12])
 			if dic_anno.get(xQTL_chr) is not None:
 				dic_xQTL_chr = dic_anno[xQTL_chr]
 				bound_left = location - flanking_length
@@ -43,7 +43,9 @@ with open(fl_out, 'a') as fh_out:
 				for gene in dic_xQTL_chr.keys():
 					gene_start, gene_end = dic_xQTL_chr[gene][2], dic_xQTL_chr[gene][3]
 					if gene_start >= bound_left and gene_end <= bound_right:
-						output = [trait, condition, xQTL, xQTL_chr, xQTL_start, xQTL_end, lead_snp, leadp, gene]
+						entry = [trait, condition, xQTL, xQTL_chr, xQTL_start, xQTL_end, lead_snp, leadp, gene]
+#						allgenes_flanking.append(entry)
 						output = [str(i) for i in output]
 						fh_out.writelines('\t'.join(output))
 						fh_out.writelines('\n')
+

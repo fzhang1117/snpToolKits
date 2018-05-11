@@ -119,27 +119,29 @@ def my_snpSettle(snp, xQTL, condition):
 			line2 = line2.split('\t')
 			snp_trait, snp_name, snp_chr, snp_location, snp_p = line2[0], line2[1], int(line2[2]), int(line2[3]), float(line2[6])
 			if snp_chr == xQTL_chr and (snp_location >= xQTL_start and snp_location <= xQTL_end):
-				entry = [snp_trait, snp_name, condition, snp_p, xQTL_name, xQTL_chr, xQTL_start, xQTL_end, genes]
+				entry = [snp_trait, snp_name, condition, snp_p, xQTL_name, xQTL_chr, xQTL_start, xQTL_end, genes, snp_location]
 				list_snp.append(entry)
 	for key in dic_xQTL.keys():
 		dic_entry, trait_list = {}, []
 		for line_snp in list_snp:
-			snp_trait, snp_name, condition, snp_p, xQTL_name, xQTL_chr, xQTL_start, xQTL_end, genes = line_snp[0], line_snp[1], line_snp[2], line_snp[3], line_snp[4], line_snp[5], line_snp[6], line_snp[7], line_snp[8]
+			snp_trait, snp_name, condition, snp_p, xQTL_name, xQTL_chr, xQTL_start, xQTL_end, genes, snp_location = line_snp[0], line_snp[1], line_snp[2], line_snp[3], line_snp[4], line_snp[5], line_snp[6], line_snp[7], line_snp[8], line_snp[9]
 			if xQTL_name == key and snp_trait not in trait_list:
-				dic_entry[snp_trait] = [condition, xQTL_name, xQTL_chr, xQTL_start, xQTL_end, xQTL_end - xQTL_start, 1, snp_name, snp_p, genes, [snp_name]]
+				dic_entry[snp_trait] = [condition, xQTL_name, xQTL_chr, xQTL_start, xQTL_end, xQTL_end - xQTL_start, 1, snp_name, snp_p, genes, [snp_name], snp_location]
 				dic_xQTL[xQTL_name] = dic_entry[snp_trait]
 				trait_list.append(snp_trait)
 				p_min = snp_p
-				snp_temp, p_temp = [snp_name, '-'], [p_min, 1]
+				snp_temp, p_temp, location_temp  = [snp_name, '-'], [p_min, 1], [snp_location, 0]
 			elif xQTL_name == key and snp_trait in trait_list:
 				dic_entry[snp_trait][6] += 1
 				dic_entry[snp_trait][10].append(snp_name)
-				snp_temp[1], p_temp[1] = snp_name, snp_p
+				snp_temp[1], p_temp[1], location_temp[1] = snp_name, snp_p, snp_location
 				p_min = min(p_temp)
 				index_leadsnp = p_temp.index(p_min)
 				lead_snp = snp_temp[index_leadsnp]
-				dic_entry[snp_trait][7], dic_entry[snp_trait][8] = lead_snp, p_min
-				snp_temp, p_temp = [snp_name, '-'], [p_min, 1]
+				index_leadlocation = p_temp.index(p_min)
+				lead_location = location_temp[index_leadlocation]
+				dic_entry[snp_trait][7], dic_entry[snp_trait][8], dic_entry[snp_trait][11] = lead_snp, p_min, lead_location
+				snp_temp, p_temp, location_temp = [snp_name, '-'], [p_min, 1], [snp_location, 0]
 		for value in dic_entry.values():
 			value[10] = '|'.join(value[10])
 		dic_xQTL[key] = dic_entry
@@ -166,7 +168,7 @@ with open(fl_xQTL, 'a') as fh_xQTL:
 		fh_xQTL.writelines('\n')
 
 with open(fl_summary, 'a') as fh_summary:
-	title = ['trait', 'condition', 'xQTL', 'chr', 'start', 'end', 'length', 'snp_number', 'leadsnp', 'leadp', 'gene_list', 'allsnp']
+	title = ['trait', 'condition', 'xQTL', 'chr', 'start', 'end', 'length', 'snp_number', 'leadsnp', 'leadp', 'gene_list', 'allsnp', 'lead_location']
 	fh_summary.writelines('\t'.join(title))
 	fh_summary.writelines('\n')
 	for key1 in sorted(summary_drought.keys()):
