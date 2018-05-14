@@ -47,9 +47,9 @@ python kegg_annotation.py ${prefix}_gene_temp.txt ${prefix}_kegg_annotation_temp
 paste ${prefix}_candidate_temp.txt ${prefix}_kegg_annotation_temp.txt > ${prefix}_candidate_anno.txt
 python ~/tools/v3tov4_trans/v3tov4_trans.py ~/tools/v3tov4_trans/library/v3_v4_xref.txt ${prefix}_gene_temp.txt ${prefix}_gene_v4.txt
 python ~/tools/maize_annotation/auto-annotation.py ${prefix}_gene_temp.txt ${prefix}_gene_annotation.txt
+sed '1 itrait\tconditon\txQTL\tchr\tstart\tend\tleadsnp\tleadp\tCandidateGene\tGeneLocation\tDistance\tCandidateGene\tPathway\tPathwayAnnotation' -i ${prefix}_candidate_anno.txt
+paste ${prefix}_candidate_anno.txt ${prefix}_gene_v4.txt ${prefix}_gene_annotation.txt > ${prefix}_CandidateGene.txt
 ## result file has been fixed here, if change the dir or result address, change this line.
 python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_summary.txt ${prefix}_xQTL_all_compare.txt
 python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_final_summary.txt ${prefix}_xQTL_final_compare.txt
-sed '1 itrait\tconditon\txQTL\tchr\tstart\tend\tleadsnp\tleadp\tCandidateGene\tGeneLocation\tDistance\tCandidateGene\tPathway\tPathwayAnnotation' -i ${prefix}_candidate_anno.txt
-paste ${prefix}_candidate_anno.txt ${prefix}_gene_v4.txt ${prefix}_gene_annotation.txt > ${prefix}_CandidateGene.txt
 rm -rf ${prefix}_candidate_temp.txt ${prefix}_kegg_annotation_temp.txt ${prefix}_gene_temp.txt ${prefix}_candidate_anno.txt ${prefix}_gene_v4.txt ${prefix}_gene_annotation.txt
