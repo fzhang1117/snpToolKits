@@ -41,4 +41,15 @@ cat ${prefix}_drought_xQTL_ld.txt ${prefix}_normal_xQTL_ld.txt > ${prefix}_xQTL_
 rm -rf ${prefix}_xQTL_summary_sorted.txt
 Rscript ./xQTL_merge.R ${prefix}_xQTL_summary.txt ${prefix}_xQTL_ld.txt ${prefix} ${threshold} $singlefilter
 rm -rf ${prefix}_normal_xQTL_ld.txt ${prefix}_drought_xQTL_ld.txt ${prefix}_xQTL_drought.txt ${prefix}_xQTL_normal.txt
-python CandidateGene_Search.py ${prefix}_final_summary.txt $fl_gff $flanking ${prefix}_candidate_temp.txt
+python CandidateGene_Search.py ${prefix}_xQTL_final_summary.txt $fl_gff $flanking ${prefix}_candidate_temp.txt
+awk -F '\t' '{print $9}' ${prefix}_candidate_temp.txt > ${prefix}_gene_temp.txt
+python kegg_annotation.py ${prefix}_gene_temp.txt ${prefix}_kegg_annotation_temp.txt
+paste ${prefix}_candidate_temp.txt ${prefix}_kegg_annotation_temp.txt > ${prefix}_candidate_anno.txt
+python ~/tools/v3tov4_trans/v3tov4_trans.py ~/tools/v3tov4_trans/library/v3_v4_xref.txt ${prefix}_gene_temp.txt ${prefix}_gene_v4.txt
+python ~/tools/maize_annotation/auto-annotation.py ${prefix}_gene_temp.txt ${prefix}_gene_annotation.txt
+## result file has been fixed here, if change the dir or result address, change this line.
+python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_summary.txt ${prefix}_xQTL_all_compare.txt
+python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_final_summary.txt ${prefix}_xQTL_final_compare.txt
+sed '1 itrait\tconditon\txQTL\tchr\tstart\tend\tleadsnp\tleadp\tCandidateGene\tGeneLocation\tDistance\tCandidateGene\tPathway\tPathwayAnnotation' -i ${prefix}_candidate_anno.txt
+paste ${prefix}_candidate_anno.txt ${prefix}_gene_v4.txt ${prefix}_gene_annotation.txt > ${prefix}_CandidateGene.txt
+rm -rf ${prefix}_candidate_temp.txt ${prefix}_kegg_annotation_temp.txt ${prefix}_gene_temp.txt ${prefix}_candidate_anno.txt ${prefix}_gene_v4.txt ${prefix}_gene_annotation.txt

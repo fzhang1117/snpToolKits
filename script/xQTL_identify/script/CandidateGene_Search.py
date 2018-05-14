@@ -43,7 +43,15 @@ with open(fl_out, 'a') as fh_out:
 				for gene in dic_xQTL_chr.keys():
 					gene_start, gene_end = dic_xQTL_chr[gene][2], dic_xQTL_chr[gene][3]
 					if gene_start >= bound_left and gene_end <= bound_right:
-						entry = [trait, condition, xQTL, xQTL_chr, xQTL_start, xQTL_end, lead_snp, leadp, gene]
+						if gene_start <= location and gene_end >= location:
+							gene_location, distance = "in", "-"
+						elif gene_start >= location:
+							gene_location = "downstream"
+							distance = gene_start - location
+						elif gene_end <= location:
+							gene_location = "upstream"
+							distance = location - gene_end
+						output = [trait, condition, xQTL, xQTL_chr, xQTL_start, xQTL_end, lead_snp, leadp, gene, gene_location, distance]
 #						allgenes_flanking.append(entry)
 						output = [str(i) for i in output]
 						fh_out.writelines('\t'.join(output))

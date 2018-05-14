@@ -96,5 +96,5 @@ xQTL_normal_rest <- xQTL_normal[!(xQTL_normal$trait %in% remove.normal$trait & x
 
 xQTL_rest <- rbind(xQTL_drought_rest, xQTL_normal_rest)
 
-fl_output <- paste(Prefix, "_final_summary.txt", sep = "")
+fl_output <- paste(Prefix, "_xQTL_final_summary.txt", sep = "")
 write.table(xQTL_rest, fl_output, quote = F, sep = "\t", row.names = F)
