@@ -51,8 +51,9 @@ sed '1 itrait\tconditon\txQTL\tchr\tstart\tend\tleadsnp\tleadp\tCandidateGene\tG
 paste ${prefix}_candidate_anno.txt ${prefix}_gene_v4.txt ${prefix}_gene_annotation.txt > ${prefix}_CandidateGene.txt
 ## cpd and gene expression file has been fixed here, if change the dir or result address, check and chage here
 Rscript ./GeneCpdRegression.R ../data/GC_DN_Normal_GWAS.txt ../data/GC_DN_Drought_GWAS.txt ../data/ephenoMatrixC ../data/ephenoMatrixD ../result/${prefix}_CandidateGene.txt ${prefix}
-
+Rscript ./xQTL_effect.R $fl_hmp ${prefix}_xQTL_final_summary.txt ../data/GC_DN_Drought_GWAS.txt ../data/GC_DN_Normal_GWAS.txt ${prefix}_final
+Rscript ./xQTL_effect.R $fl_hmp ${prefix}_xQTL_summary.txt ../data/GC_DN_Drought_GWAS.txt ../data/GC_DN_Normal_GWAS.txt ${prefix}_all
 ## result file has been fixed here, if change the dir or result address, change this line.
-python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_summary.txt ${prefix}_xQTL_all_compare.txt
-python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_final_summary.txt ${prefix}_xQTL_final_compare.txt
+#python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_summary.txt ${prefix}_xQTL_all_compare.txt
+#python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_final_summary.txt ${prefix}_xQTL_final_compare.txt
 rm -rf ${prefix}_candidate_temp.txt ${prefix}_kegg_annotation_temp.txt ${prefix}_gene_temp.txt ${prefix}_candidate_anno.txt ${prefix}_gene_v4.txt ${prefix}_gene_annotation.txt

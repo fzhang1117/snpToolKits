@@ -99,8 +99,8 @@ for(i in 1: dim(candidateGene)[1]){
         points(meta ~ gene, data = data.drought)
         abline(fit.drought)
         text(0.95*min(data.drought$gene) - 0.5 + 0.85*x.length, 0.95*min(data.drought$meta, na.rm = T) - 0.5 + 0.95*y.length, formula, cex = 0.8)
-        text(0.95*min(data.drought$gene) - 0.5 + 0.85*x.length, 0.95*min(data.drought$meta, na.rm = T) - 0.5 + 0.90*y.length, paste("p = ", round(result[i, 5], 4), sep = ""), cex = 0.8)
-        text(0.95*min(data.drought$gene) - 0.5 + 0.85*x.length, 0.95*min(data.drought$meta, na.rm = T) - 0.5 + 0.85*y.length, paste("|R| = ", round(sqrt(result[i, 4]), 4), sep = ""), cex = 0.8)
+        text(0.95*min(data.drought$gene) - 0.5 + 0.85*x.length, 0.95*min(data.drought$meta, na.rm = T) - 0.5 + 0.90*y.length, paste("p = ", round(result[i, 7], 4), sep = ""), cex = 0.8)
+        text(0.95*min(data.drought$gene) - 0.5 + 0.85*x.length, 0.95*min(data.drought$meta, na.rm = T) - 0.5 + 0.85*y.length, paste("|R| = ", round(sqrt(result[i, 6]), 4), sep = ""), cex = 0.8)
     }else{
         plot(x = c(0.95*min(data.drought$gene) - 0.5, 1.05*max(data.drought$gene) + 0.5), y = c(0.95*min(data.drought$meta, na.rm = T), 1.05*max(data.drought$meta, na.rm = T)), 
              xlim = c(0.95*min(data.drought$gene) - 0.5, 1.05*max(data.drought$gene) + 0.5), ylim = c(0.95*min(data.drought$meta, na.rm = T) - 0.5, 1.05*max(data.drought$meta, na.rm = T) + 0.5), 
