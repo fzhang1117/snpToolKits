@@ -24,7 +24,7 @@ fl_gff3 = sys.argv[5]
 
 ## prefix of output
 prefix = sys.argv[6]
-fl_generesult = prefix + 'pGWAS_result.txt'
+fl_generesult = prefix + '_pGWAS_result.txt'
 
 ## output file 
 #fl_out = sys.argv[5]
@@ -75,7 +75,7 @@ for snp in selected_snps:
         filtered_snps.append(snp)
 
 filtered_snps = sorted(filtered_snps, key = itemgetter(0, 2, 3))
-gene_mapping = []
+gene_mapping = [['triat', 'snp', 'chr', 'location', 'p', 'line', 'MarkerR2', 'Gene']]
 #print dic_gff
 
 for line in filtered_snps:
