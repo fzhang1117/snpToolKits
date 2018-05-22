@@ -27,6 +27,9 @@ threshold=$8
 ## the flanking_region
 flanking=$9
 
+## the pGWAS result
+fl_pGWAS=${10}
+
 ## for example
 ## sh run.sh ../data/mlm_GC_drought_5.00.txt ../data/mlm_GC_normal_5.00.txt ../data/sorted_mGWAS_sig_snp.all.hmp ../../../data/ZmB73_5b_FGS_GeneOnly.gff3 10000 ../result/mlm_GC_5.00_20kb_0.1_100kb T 0.1 100000
 
@@ -53,6 +56,8 @@ paste ${prefix}_candidate_anno.txt ${prefix}_gene_v4.txt ${prefix}_gene_annotati
 Rscript ./GeneCpdRegression.R ../data/GC_DN_Normal_GWAS.txt ../data/GC_DN_Drought_GWAS.txt ../data/ephenoMatrixC ../data/ephenoMatrixD ../result/${prefix}_CandidateGene.txt ${prefix}
 Rscript ./xQTL_effect.R $fl_hmp ${prefix}_xQTL_final_summary.txt ../data/GC_DN_Drought_GWAS.txt ../data/GC_DN_Normal_GWAS.txt ${prefix}_final
 Rscript ./xQTL_effect.R $fl_hmp ${prefix}_xQTL_summary.txt ../data/GC_DN_Drought_GWAS.txt ../data/GC_DN_Normal_GWAS.txt ${prefix}_all
+
+python xQTL_pGWASsigsnpExtract.py $fl_pGWAS ${prefix}_xQTL_final_summary.txt $flanking 0.05 $fl_gff ${prefix}_xQTL_final
 ## result file has been fixed here, if change the dir or result address, change this line.
 #python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_summary.txt ${prefix}_xQTL_all_compare.txt
 #python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_final_summary.txt ${prefix}_xQTL_final_compare.txt
