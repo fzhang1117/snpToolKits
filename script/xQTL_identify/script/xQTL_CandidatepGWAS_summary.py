@@ -38,7 +38,7 @@ dic_summary, trait_list = {}, []
 for line in result_merge:
     gene, cpd, condition = line[0], line[8], line[9]
     key = gene + '-' + cpd + '-' + condition
-    xQTL, leadp_cpd, location, distance, pathway, pathwayAnno, ZmV4, genesymbol, altName, zma_alias, zma_description, ara_ortholog, ara_alias, ara_annotation = line[10], line[15], line[17], line[18], line[19], line[20], line[21], line[22], line[26], line[27], line[28], line[29], line[30], line[31]
+    xQTL, leadp_cpd, location, distance, pathway, pathwayAnno, ZmV4, genesymbol, altName, zma_alias, zma_description, ara_ortholog, ara_alias, ara_annotation = line[10], line[15], line[17], line[18], line[19], line[20], line[21], line[22], line[27], line[28], line[29], line[30], line[31], line[32]
     key_anno = [xQTL, leadp_cpd, location,distance, pathway, pathwayAnno, ZmV4, genesymbol, altName, zma_alias, zma_description, ara_ortholog, ara_alias, ara_annotation]
     trait, snp_pGWAS, leadp_pGWAS = line[1], line[2], float(line[5])
     trait_list.append(trait)
@@ -76,6 +76,7 @@ for key in dic_summary.keys():
     entry = [str(i) for i in entry]
     output.append(entry)
 
-#with open()
-output = ['\t'.join(i) for i in output]
-print '\n'.join(output)
+with open(fl_output, 'w') as fh_output:
+    output = ['\t'.join(i) for i in output]
+    output = '\n'.join(output)
+    fh_output.write(output)
