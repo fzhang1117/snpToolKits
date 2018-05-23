@@ -8,7 +8,15 @@ from itertools import islice
 
 fl_CandidateGene = sys.argv[1]
 fl_pGWASSummary = sys.argv[2]
-fl_output = sys.argv[3]
+fl_cpdID = sys.argv[3]
+fl_output = sys.argv[4]
+
+with open(fl_cpdID, 'r') as fh_cpdID:
+    dic_cpdID = {}
+    for line in fh_cpdID:
+        line = line.strip('\n').split('\t')
+        if dic_cpdID.get(line[0]) is None:
+            dic_cpdID[line[0]] = line[1]
 
 with open(fl_CandidateGene, 'r') as fh_CandidateGene:
     dic_CandidateGene = {}
@@ -36,10 +44,11 @@ with open(fl_pGWASSummary, 'r') as fh_pGWASSummary:
 dic_summary, trait_list = {}, []
 
 for line in result_merge:
-    gene, cpd, condition = line[0], line[8], line[9]
-    key = gene + '-' + cpd + '-' + condition
+    gene, cpdID, condition = line[0], line[8], line[9]
+    cpd = dic_cpdID[cpdID]
+    key = gene + '-' + cpdID + '-' + condition
     xQTL, leadp_cpd, location, distance, pathway, pathwayAnno, ZmV4, genesymbol, altName, zma_alias, zma_description, ara_ortholog, ara_alias, ara_annotation = line[10], line[15], line[17], line[18], line[19], line[20], line[21], line[22], line[27], line[28], line[29], line[30], line[31], line[32]
-    key_anno = [xQTL, leadp_cpd, location,distance, pathway, pathwayAnno, ZmV4, genesymbol, altName, zma_alias, zma_description, ara_ortholog, ara_alias, ara_annotation]
+    key_anno = [cpd, xQTL, leadp_cpd, location,distance, pathway, pathwayAnno, ZmV4, genesymbol, altName, zma_alias, zma_description, ara_ortholog, ara_alias, ara_annotation]
     trait, snp_pGWAS, leadp_pGWAS = line[1], line[2], float(line[5])
     trait_list.append(trait)
     if dic_summary.get(key) is None:
@@ -53,7 +62,7 @@ for line in result_merge:
         else:
             dic_summary[key]['summary_snp'][trait] += 1
             leadp_pGWAS_temp = dic_summary[key]['summary_leadp'][trait]
-            dic_summary[key]['summary_leadp'][trait] = min(leadp_pGWAS, leadp_pGWAS)
+            dic_summary[key]['summary_leadp'][trait] = min(leadp_pGWAS_temp, leadp_pGWAS)
 
 trait_list = sorted(list(set(trait_list)))
 

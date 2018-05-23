@@ -63,11 +63,13 @@ python ~/tools/maize_annotation/auto-annotation.py ${prefix}_query1.txt ${prefix
 paste ${prefix}_xQTL_final_pGWAS_result.txt ${prefix}_final_pGWAS_anno.txt > ${prefix}_final_pGWAS.txt
 rm -rf ${prefix}_xQTL_final_pGWAS_result.txt ${prefix}_query1.txt ${prefix}_final_pGWAS_anno.txt
 
-python xQTL_pGWASsigsnpExtract.py $fl_pGWAS ${prefix}_xQTL_summary.txt $flanking 0.05 $fl_gff ${prefix}_xQTL_all
-awk '{print $8}' ${prefix}_xQTL_all_pGWAS_result.txt | sed '1d' > ${prefix}_query2.txt
-python ~/tools/maize_annotation/auto-annotation.py ${prefix}_query2.txt ${prefix}_all_pGWAS_anno.txt
-paste ${prefix}_xQTL_all_pGWAS_result.txt ${prefix}_all_pGWAS_anno.txt > ${prefix}_all_pGWAS.txt
-rm -rf ${prefix}_xQTL_all_pGWAS_result.txt ${prefix}_query2.txt ${prefix}_all_pGWAS_anno.txt
+python xQTL_CandidatepGWAS_summary.py ${prefix}_CandidateGene.txt ${prefix}_final_pGWAS.txt ~/tools/SNPToolKits/script/xQTL_identify/data/GC_metaboliteID.txt ${prefix}_CandidatepGWAS.txt
+
+#python xQTL_pGWASsigsnpExtract.py $fl_pGWAS ${prefix}_xQTL_summary.txt $flanking 0.05 $fl_gff ${prefix}_xQTL_all
+#awk '{print $8}' ${prefix}_xQTL_all_pGWAS_result.txt | sed '1d' > ${prefix}_query2.txt
+#python ~/tools/maize_annotation/auto-annotation.py ${prefix}_query2.txt ${prefix}_all_pGWAS_anno.txt
+#paste ${prefix}_xQTL_all_pGWAS_result.txt ${prefix}_all_pGWAS_anno.txt > ${prefix}_all_pGWAS.txt
+#rm -rf ${prefix}_xQTL_all_pGWAS_result.txt ${prefix}_query2.txt ${prefix}_all_pGWAS_anno.txt
 
 ## result file has been fixed here, if change the dir or result address, change this line.
 #python ./xQTL_multiEnviCampare.py ~/AMP_drought/GC_MS/result/DN_drought_GC/stats/ ~/AMP_drought/GC_MS/result/DN_normal_GC/stats/ ${prefix}_xQTL_summary.txt ${prefix}_xQTL_all_compare.txt
