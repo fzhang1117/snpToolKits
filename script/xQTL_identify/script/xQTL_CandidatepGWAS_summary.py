@@ -66,7 +66,7 @@ for line in result_merge:
 
 trait_list = sorted(list(set(trait_list)))
 
-title = ['gene', 'cpd', 'condition', 'xQTL', 'p_cpd', 'gene:leadp_location', 'gene:leadp_distance', 'pathwayID', 'pathwayAnno', 'gene_v4', 'genesymbol', 'altName', 'zma_alias', 'zma_description', 'ara_ortholog', 'ara_alias', 'ara_annotation'] + ['snpnum:' + i for i in trait_list] + ['minp:' + i for i in trait_list ]
+title = ['gene', 'cpdID', 'condition', 'cpdName', 'xQTL', 'p_cpd', 'gene:leadp_location', 'gene:leadp_distance', 'pathwayID', 'pathwayAnno', 'gene_v4', 'genesymbol', 'altName', 'zma_alias', 'zma_description', 'ara_ortholog', 'ara_alias', 'ara_annotation'] + ['snpnum:' + i for i in trait_list] + ['minp:' + i for i in trait_list ]
 output = [title]
 for key in dic_summary.keys():
     key_split = key.split('-')
